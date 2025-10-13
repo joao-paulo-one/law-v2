@@ -57,6 +57,12 @@ body {
   z-index: 1;
 }
 
+.Opta > .Opta_W {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+}
+
 /* (use data URIs for instant first paint) */
 .mute-button[aria-pressed="true"] {
   /* muted */
