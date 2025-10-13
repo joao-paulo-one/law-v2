@@ -153,8 +153,11 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
 function onAdEvent(adEvent) {
   console.log("AdEvent: " + adEvent.type);
   adCurrentStatus = adEvent.type;
-  if (adEvent.type == google.ima.AdEvent.Type.LOADED && didRequestToPlay) {
-    playAd();
+  if (adEvent.type == google.ima.AdEvent.Type.LOADED) {
+    postEvent("ad.loaded");
+    if (didRequestToPlay) {
+      playAd();
+    }
   }
   if (adEvent.type == google.ima.AdEvent.Type.COMPLETE) {
     hideMuteButton(true);
@@ -166,8 +169,7 @@ function onAdEvent(adEvent) {
  * @param {!google.ima.AdErrorEvent} adErrorEvent
  */
 function onAdError(adErrorEvent) {
-  // Handle the error logging.
-  console.log(adErrorEvent.getError());
+  postEvent("ad.error");
   adsManager.destroy();
   hideMuteButton(true);
 }

@@ -1,4 +1,4 @@
-function postOptaEvent(event) {
+function postEvent(event) {
   const handler = window.optaEventHandler;
   if (handler && typeof handler.postMessage === "function") {
     handler.postMessage(String(event));
@@ -17,18 +17,18 @@ function subscribeToOptaEvents(attempts) {
   ) {
     Opta.events.subscribe("application.init", function () {
       initAdsManager();
-      postOptaEvent("application.init");
+      postEvent("application.init");
     });
     Opta.events.subscribe("application.error", function () {
-      postOptaEvent("application.error");
+      postEvent("application.error");
     });
     Opta.events.subscribe("widget.loaded", function () {
-      postOptaEvent("widget.loaded");
+      postEvent("widget.loaded");
     });
     Opta.events.subscribe("widget.error", function () {
-      postOptaEvent("widget.error");
+      postEvent("widget.error");
     });
-    postOptaEvent("__opta_subscribed__");
+    postEvent("__opta_subscribed__");
     return;
   }
   if (attempts < 50) {
@@ -37,7 +37,7 @@ function subscribeToOptaEvents(attempts) {
       subscribeToOptaEvents(attempts + 1);
     }, 100);
   } else {
-    postOptaEvent("__opta_subscribe_timeout__");
+    postEvent("__opta_subscribe_timeout__");
   }
 }
 
