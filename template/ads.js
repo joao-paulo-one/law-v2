@@ -7,11 +7,6 @@ let adCurrentStatus;
 let didRequestToPlay;
 let adMuted = true;
 
-let icon_volume_off =
-  "https://filebucket.onefootball.com/live-action-widget/template/volume_muted.svg";
-let icon_volume_on =
-  "https://filebucket.onefootball.com/live-action-widget/template/volume_high.svg";
-
 /**
  * Initializes IMA setup.
  */
@@ -96,7 +91,6 @@ function requestAd() {
 
 function createMuteButton() {
   muteButton = document.getElementById("muteButton");
-  updateMuteButtonIcon(adMuted);
 }
 
 /**
@@ -198,12 +192,8 @@ function getAdDimensions() {
 }
 
 function updateMuteButtonIcon(isMuted) {
-  muteButton.setAttribute("aria-pressed", String(isMuted));
-
-  const iconElement = document.getElementById("muteButtonIcon");
-  if (iconElement) {
-    iconElement.setAttribute("src", isMuted ? icon_volume_off : icon_volume_on);
-  }
+  const next = muteButton.getAttribute("aria-pressed") !== "true";
+  muteButton.setAttribute("aria-pressed", String(next));
 }
 
 function hideMuteButton(isHidden) {
