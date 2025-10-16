@@ -11,6 +11,10 @@ let adMuted = false;
  * Initializes IMA setup.
  */
 function initAdsManager() {
+  if (typeof adTagUrl !== "string" || adTagUrl.trim() === "") {
+    console.warn("[IMA] Missing adTagUrl; skipping ad request.");
+    return;
+  }
   setUpIMA();
   requestAd();
   createMuteButton();
