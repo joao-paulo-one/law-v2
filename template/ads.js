@@ -5,7 +5,7 @@ let muteButton;
 let adsInitialized;
 let adCurrentStatus;
 let didRequestToPlay;
-let adMuted = true;
+let adMuted = false;
 
 /**
  * Initializes IMA setup.
@@ -72,7 +72,6 @@ function setUpIMA() {
     onAdError,
     false
   );
-  console.log("setUpIMA done");
 }
 
 /**
@@ -85,7 +84,7 @@ function requestAd() {
   adsRequest.adTagUrl = adTagUrl;
 
   adsRequest.setAdWillAutoPlay(true);
-  adsRequest.setAdWillPlayMuted(true); // TODO: setup with volume with button and FF
+  adsRequest.setAdWillPlayMuted(adMuted);
   adsLoader.requestAds(adsRequest);
 }
 
