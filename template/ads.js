@@ -87,7 +87,7 @@ function requestAd() {
 
   adsRequest.adTagUrl = adTagUrl;
 
-  adsRequest.setAdWillAutoPlay(true);
+  adsRequest.setAdWillAutoPlay(false);
   adsRequest.setAdWillPlayMuted(adMuted);
   adsLoader.requestAds(adsRequest);
 }
