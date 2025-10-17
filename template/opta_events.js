@@ -1,7 +1,11 @@
-function postEvent(event) {
+function postEvent(event, data) {
   const handler = window.optaEventHandler;
   if (handler && typeof handler.postMessage === "function") {
-    handler.postMessage(String(event));
+    if (data) {
+      handler.postMessage(String(event), String(data));
+    } else {
+      handler.postMessage(String(event));
+    }
     return;
   }
   console.warn("optaEventHandler.postMessage is unavailable", event);

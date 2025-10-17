@@ -15,6 +15,7 @@ function initAdsManager() {
     console.warn("[IMA] Missing adTagUrl; skipping ad request.");
     return;
   }
+
   setUpIMA();
   requestAd();
   createMuteButton();
@@ -145,6 +146,8 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
   adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.PAUSED, onAdEvent);
   adsManager.addEventListener(google.ima.AdEvent.Type.RESUMED, onAdEvent);
+  adsManager.addEventListener(google.ima.AdEvent.Type.SKIPPED, onAdEvent); // TODO: Need to check
+  adsManager.addEventListener(google.ima.AdEvent.Type.CLICK, onAdEvent);
 
   startAdsManager();
 }
@@ -156,14 +159,22 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
 function onAdEvent(adEvent) {
   console.log("AdEvent: " + adEvent.type);
   adCurrentStatus = adEvent.type;
-  if (adEvent.type == google.ima.AdEvent.Type.LOADED) {
-    postEvent("ad.loaded");
-    if (didRequestToPlay) {
-      playAd();
-    }
-  }
-  if (adEvent.type == google.ima.AdEvent.Type.COMPLETE) {
-    hideMuteButton(true);
+
+  switch (adEvent.type) {
+    case google.ima.AdEvent.Type.LOADED:
+      postEvent("ad.loaded");
+      if (didRequestToPlay) {
+        playAd();
+      }
+      break;
+
+    case google.ima.AdEvent.Type.COMPLETE:
+      hideMuteButton(true);
+      break;
+
+    case google.ima.AdEvent.Type.CLICK:
+      postEvent("ad.clicked", adEvent.ad.data.clickThroughUrl);
+      break;
   }
 }
 
