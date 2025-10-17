@@ -66,6 +66,7 @@ function setUpIMA() {
   createAdDisplayContainer();
   // Create ads loader.
   adsLoader = new google.ima.AdsLoader(adDisplayContainer);
+  adsLoader.getSettings().setAutoPlayAdBreaks(false);
   // Listen and respond to ads loaded and error events.
   adsLoader.addEventListener(
     google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
