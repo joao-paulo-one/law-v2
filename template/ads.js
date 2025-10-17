@@ -162,7 +162,7 @@ function onAdEvent(adEvent) {
 
   switch (adEvent.type) {
     case google.ima.AdEvent.Type.LOADED:
-      postEvent("ad.loaded");
+      postEvent("ad.loaded", adEvent.ad.data.clickThroughUrl);
       if (didRequestToPlay) {
         playAd();
       }
