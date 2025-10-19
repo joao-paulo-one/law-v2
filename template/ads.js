@@ -6,6 +6,7 @@ let adsInitialized;
 let adCurrentStatus;
 let didRequestToPlay;
 let adMuted = false;
+let isDebug = true;
 
 /**
  * Initializes IMA setup.
@@ -30,14 +31,13 @@ function setAdVisibility(isVisible) {
 }
 
 function playAd() {
-  console.log("playAd adStatus: " + adCurrentStatus);
+  debugLog("playAd adStatus: " + adCurrentStatus);
 
   if (adCurrentStatus == undefined) {
     // listen to the event LOADED and call this func again
     didRequestToPlay = true;
   } else if (adCurrentStatus == google.ima.AdEvent.Type.LOADED) {
     adsManager.start();
-    hideMuteButton(false);
   } else {
     adsManager.resume();
   }
@@ -158,7 +158,7 @@ function onAdsManagerLoaded(adsManagerLoadedEvent) {
  * @param {!google.ima.AdEvent} adEvent
  */
 function onAdEvent(adEvent) {
-  console.log("AdEvent: " + adEvent.type);
+  debugLog("AdEvent: " + adEvent.type);
   adCurrentStatus = adEvent.type;
 
   switch (adEvent.type) {
@@ -168,11 +168,13 @@ function onAdEvent(adEvent) {
         playAd();
       }
       break;
-
+    case google.ima.AdEvent.Type.STARTED:
+      hideMuteButton(false);
+      break;
+    case google.ima.AdEvent.Type.SKIPPED:
     case google.ima.AdEvent.Type.COMPLETE:
       hideMuteButton(true);
       break;
-
     case google.ima.AdEvent.Type.CLICK:
       postEvent("ad.clicked", adEvent.ad.data.clickThroughUrl);
       break;
@@ -204,7 +206,7 @@ function getAdDimensions() {
     height = computedHeight;
   }
 
-  console.log(`Ad dimensions: ${width}x${height}`);
+  debugLog(`Ad dimensions: ${width}x${height}`);
   return { width, height };
 }
 
@@ -214,6 +216,12 @@ function updateMuteButtonIcon(isMuted) {
 }
 
 function hideMuteButton(isHidden) {
-  console.log("hideMuteButton: " + isHidden);
+  debugLog("hideMuteButton: " + isHidden);
   muteButton.style.display = isHidden ? "none" : "block";
+}
+
+function debugLog(message) {
+  if (isDebug) {
+    console.log(message);
+  }
 }

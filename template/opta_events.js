@@ -25,12 +25,14 @@ function subscribeToOptaEvents(attempts) {
     });
     Opta.events.subscribe("application.error", function () {
       postEvent("application.error");
+      hideMuteButton(true);
     });
     Opta.events.subscribe("widget.loaded", function () {
       postEvent("widget.loaded");
     });
     Opta.events.subscribe("widget.error", function () {
       postEvent("widget.error");
+      hideMuteButton(true);
     });
     postEvent("__opta_subscribed__");
     return;
