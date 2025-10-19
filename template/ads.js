@@ -175,6 +175,12 @@ function onAdEvent(adEvent) {
     case google.ima.AdEvent.Type.COMPLETE:
       hideMuteButton(true);
       break;
+    case google.ima.AdEvent.Type.PAUSED:
+      postEvent("ad.paused");
+      break;
+    case google.ima.AdEvent.Type.RESUMED:
+      postEvent("ad.resumed");
+      break;
     case google.ima.AdEvent.Type.CLICK:
       postEvent("ad.clicked", adEvent.ad.data.clickThroughUrl);
       break;
