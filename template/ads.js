@@ -5,7 +5,7 @@ let muteButton;
 let adsInitialized;
 let adCurrentStatus;
 let didRequestToPlay;
-let adMuted = false;
+let adMuted = true;
 let isDebug = true;
 
 /**
