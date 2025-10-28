@@ -49,17 +49,9 @@ function subscribeToOptaEvents(attempts) {
 
 // JS error wiring -> stringified payloads
 window.onerror = function (message, source, lineno, colno, error) {
-  if (window.errorHandler && window.errorHandler.postMessage) {
-    window.errorHandler.postMessage(
-      JSON.stringify({
-        type: "window.onerror",
-        message: String(message),
-        source: String(source),
-        line: Number(lineno),
-        column: Number(colno),
-        stack: error && error.stack ? String(error.stack) : null,
-      })
-    );
+  if (message.contains("Cannot read properties of undefined")) {
+    postEvent("widget.error");
+    hideMuteButton(true);
   }
 };
 
