@@ -49,7 +49,7 @@ function subscribeToOptaEvents(attempts) {
 
 // JS error wiring -> stringified payloads
 window.onerror = function (message, source, lineno, colno, error) {
-  if (message.contains("Cannot read properties of undefined")) {
+  if (message.includes("Cannot read properties of undefined")) {
     postEvent("widget.error");
     hideMuteButton(true);
   }
