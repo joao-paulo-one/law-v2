@@ -1,7 +1,6 @@
 #mainContainer {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
 }
 
 #adContainer {
@@ -61,6 +60,10 @@ body {
   position: relative;
   margin: 0;
   overflow: hidden;
+}
+
+.Opta-Overlay > h3 {
+  height: 0px;
 }
 
 /* (use data URIs for instant first paint) */
